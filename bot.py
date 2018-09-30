@@ -3,14 +3,17 @@ from selenium.common.exceptions import NoSuchElementException
 import time
 import random
 
+print('Brukernavn')
+username = input()
+print('Passord')
+password = input()
 driver = webdriver.Chrome()
-
 
 
 def site_login():
     driver.get('https://www.nordicmafia.org/login.php')
-    driver.find_element_by_name('username').send_keys('FlygendeNordmann')
-    driver.find_element_by_name('password').send_keys('Freak123123')
+    driver.find_element_by_name('username').send_keys(username)
+    driver.find_element_by_name('password').send_keys(password)
     driver.find_element_by_name('login').click()
     time.sleep(random.uniform(2, 3))
 
@@ -32,6 +35,7 @@ def crime():
     except NoSuchElementException:
         None
     print('Gjort kriminalitet')
+    prison()
     time.sleep(random.uniform(1, 2))
 
 def blackmail():
@@ -43,6 +47,7 @@ def blackmail():
     except NoSuchElementException:
         None
     print('Gjort utpressing')
+    prison()
     time.sleep(random.uniform(2, 3))
 
 
@@ -66,9 +71,13 @@ def carTheft():
     except NoSuchElementException:
         None
     print('Gjort biltyveri')
+    prison()
 
-
-
+def prison():
+    tmpText = (driver.find_element_by_class_name('bheader').text)
+    if tmpText == 'MÅ VENTE':
+        print('Venter...')
+        time.sleep(180)
 
 
 site_login()
