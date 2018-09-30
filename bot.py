@@ -2,7 +2,7 @@ from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 import time
 import random
-
+from pyautogui import press
 print('Brukernavn')
 username = input()
 print('Passord')
@@ -35,7 +35,6 @@ def crime():
     except NoSuchElementException:
         None
     print('Gjort kriminalitet')
-    prison()
     time.sleep(random.uniform(1, 2))
 
 def blackmail():
@@ -47,7 +46,6 @@ def blackmail():
     except NoSuchElementException:
         None
     print('Gjort utpressing')
-    prison()
     time.sleep(random.uniform(2, 3))
 
 
@@ -67,11 +65,13 @@ def carTheft():
     except NoSuchElementException:
         None
     try:
-        driver.find_element_by_css_selector('background-color: #ff4c4c;').click()
+        driver.find_element_by_name('sellAllVehicles').click()
+        press('enter')
+
+
     except NoSuchElementException:
         None
     print('Gjort biltyveri')
-    prison()
 
 def prison():
     tmpText = (driver.find_element_by_class_name('bheader').text)
