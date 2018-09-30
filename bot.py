@@ -99,6 +99,3 @@ while True:
     crime()
     time.sleep(random.uniform(180, 200))
 
-
-print('lol')
-
