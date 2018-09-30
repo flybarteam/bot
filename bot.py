@@ -3,14 +3,14 @@ from selenium.common.exceptions import NoSuchElementException
 import time
 import random
 
-driver = webdriver.Safari()
+driver = webdriver.Chrome()
 
 
 
 def site_login():
     driver.get('https://www.nordicmafia.org/login.php')
     driver.find_element_by_name('username').send_keys('FlygendeNordmann')
-    driver.find_element_by_name('password').send_keys('')
+    driver.find_element_by_name('password').send_keys('Freak123123')
     driver.find_element_by_name('login').click()
     time.sleep(random.uniform(2, 3))
 
@@ -65,11 +65,6 @@ def carTheft():
         driver.find_element_by_css_selector('background-color: #ff4c4c;').click()
     except NoSuchElementException:
         None
-    try:
-        driver.find_element_by_xpath('//*[@id="mainContent"]/div[2]/span/span[2]').click()
-        print('klikket på teksten')
-    except:
-        print('Fant ikkje fengselteksten')
     print('Gjort biltyveri')
 
 
