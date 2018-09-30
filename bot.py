@@ -2,15 +2,19 @@ from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 import time
 import random
-
-driver = webdriver.Safari()
-
+from pyautogui import press
+from datetime import datetime
+print('Brukernavn')
+username = input()
+print('Passord')
+password = input()
+driver = webdriver.Chrome()
 
 
 def site_login():
     driver.get('https://www.nordicmafia.org/login.php')
-    driver.find_element_by_name('username').send_keys('FlygendeNordmann')
-    driver.find_element_by_name('password').send_keys('')
+    driver.find_element_by_name('username').send_keys(username)
+    driver.find_element_by_name('password').send_keys(password)
     driver.find_element_by_name('login').click()
     time.sleep(random.uniform(2, 3))
 
@@ -31,7 +35,7 @@ def crime():
             driver.find_element_by_id('rowid_table_select_krimaction4').click()
     except NoSuchElementException:
         None
-    print('Gjort kriminalitet')
+    print('Gjort kriminalitet ' + str(datetime.now().time()))
     time.sleep(random.uniform(1, 2))
 
 def blackmail():
@@ -42,7 +46,8 @@ def blackmail():
         driver.find_element_by_name('submitBlackmail').click()
     except NoSuchElementException:
         None
-    print('Gjort utpressing')
+    print('Gjort utpressing '
+          '' + str(datetime.now().time()))
     time.sleep(random.uniform(2, 3))
 
 
@@ -62,18 +67,20 @@ def carTheft():
     except NoSuchElementException:
         None
     try:
-        driver.find_element_by_css_selector('background-color: #ff4c4c;').click()
+        driver.find_element_by_name('sellAllVehicles').click()
+        time.sleep(random.uniform(2,3))
+        press('enter')
+
+
     except NoSuchElementException:
         None
-    try:
-        driver.find_element_by_xpath('//*[@id="mainContent"]/div[2]/span/span[2]').click()
-        print('klikket på teksten')
-    except:
-        print('Fant ikkje fengselteksten')
-    print('Gjort biltyveri')
+    print('Gjort biltyveri ' + str(datetime.now().time()))
 
-
-
+def prison():
+    tmpText = (driver.find_element_by_class_name('bheader').text)
+    if tmpText == 'MÅ VENTE':
+        print('Venter...')
+        time.sleep(180)
 
 
 site_login()
@@ -94,7 +101,4 @@ while True:
     time.sleep(random.uniform(180, 200))
     crime()
     time.sleep(random.uniform(180, 200))
-
-
-
 
