@@ -3,6 +3,7 @@ from selenium.common.exceptions import NoSuchElementException
 import time
 import random
 from pyautogui import press
+from datetime import datetime
 print('Brukernavn')
 username = input()
 print('Passord')
@@ -34,7 +35,7 @@ def crime():
             driver.find_element_by_id('rowid_table_select_krimaction4').click()
     except NoSuchElementException:
         None
-    print('Gjort kriminalitet')
+    print('Gjort kriminalitet ' + str(datetime.now().time()))
     time.sleep(random.uniform(1, 2))
 
 def blackmail():
@@ -45,7 +46,8 @@ def blackmail():
         driver.find_element_by_name('submitBlackmail').click()
     except NoSuchElementException:
         None
-    print('Gjort utpressing')
+    print('Gjort utpressing '
+          '' + str(datetime.now().time()))
     time.sleep(random.uniform(2, 3))
 
 
@@ -66,12 +68,13 @@ def carTheft():
         None
     try:
         driver.find_element_by_name('sellAllVehicles').click()
+        time.sleep(random.uniform(2,3))
         press('enter')
 
 
     except NoSuchElementException:
         None
-    print('Gjort biltyveri')
+    print('Gjort biltyveri ' + str(datetime.now().time()))
 
 def prison():
     tmpText = (driver.find_element_by_class_name('bheader').text)
