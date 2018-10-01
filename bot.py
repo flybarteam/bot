@@ -12,7 +12,7 @@ print('Brukernavn')
 username = input()
 print('Passord')
 password = input()
-driver = webdriver.Chrome()
+driver = webdriver.Chrome('/Users/hansaasen/PycharmProjects/bot/chromedriver')
 
 
 def site_login():
@@ -28,33 +28,41 @@ def crime():
     randomNumber = 5
     driver.find_element_by_link_text('Kriminalitet').click()
     time.sleep(random.uniform(1, 2))
-    try:
-        if randomNumber == 1:
-            driver.find_element_by_id('rowid_table_select_krimaction0').click()
-        if randomNumber == 2:
-            driver.find_element_by_id('rowid_table_select_krimaction1').click()
-        if randomNumber == 3:
-            driver.find_element_by_id('rowid_table_select_krimaction2').click()
-        if randomNumber == 4:
-            driver.find_element_by_id('rowid_table_select_krimaction3').click()
-        if randomNumber == 5:
-            driver.find_element_by_id('rowid_table_select_krimaction4').click()
-    except NoSuchElementException:
-        None
-    print('Gjort kriminalitet ' + str(datetime.now().time()))
+    wait = driver.find_element_by_class_name('bheader').text
+    if wait == 'MÅ VENTE - KRIMINALITET':
+        print('Kan ikkje stjele, må vente')
+    else:
+        try:
+            if randomNumber == 1:
+                driver.find_element_by_id('rowid_table_select_krimaction0').click()
+            if randomNumber == 2:
+                driver.find_element_by_id('rowid_table_select_krimaction1').click()
+            if randomNumber == 3:
+                driver.find_element_by_id('rowid_table_select_krimaction2').click()
+            if randomNumber == 4:
+                driver.find_element_by_id('rowid_table_select_krimaction3').click()
+            if randomNumber == 5:
+                driver.find_element_by_id('rowid_table_select_krimaction4').click()
+        except NoSuchElementException:
+            None
+        print('Gjort kriminalitet ' + str(datetime.now().time()))
     time.sleep(random.uniform(1, 2))
 
 
 def blackmail():
     driver.find_element_by_link_text('Utpressing').click()
     time.sleep(random.uniform(1, 2))
-    try:
-        driver.find_element_by_id('sel_1').click()
-        driver.find_element_by_name('submitBlackmail').click()
-    except NoSuchElementException:
-        None
-    print('Gjort utpressing '
-          '' + str(datetime.now().time()))
+    wait = driver.find_element_by_class_name('bheader').text
+    if wait == 'MÅ VENTE - UTPRESSING':
+        print('Kan ikkje utpresse, må vente')
+    else:
+        try:
+            driver.find_element_by_id('sel_1').click()
+            driver.find_element_by_name('submitBlackmail').click()
+        except NoSuchElementException:
+            None
+        print('Gjort utpressing '
+              '' + str(datetime.now().time()))
     time.sleep(random.uniform(2, 3))
 
 
@@ -62,24 +70,33 @@ def carTheft():
     randomNumber = random.randint(1, 4)
     driver.find_element_by_link_text('Biltyveri/Garasje').click()
     time.sleep(random.uniform(2, 3))
-    try:
-        if randomNumber == 1:
-            driver.find_element_by_id('rowid_table_select_gtaaction0').click()
-        if randomNumber == 2:
-            driver.find_element_by_id('rowid_table_select_gtaaction1').click()
-        if randomNumber == 3:
-            driver.find_element_by_id('rowid_table_select_gtaaction2').click()
-        if randomNumber == 4:
-            driver.find_element_by_id('rowid_table_select_gtaaction3').click()
-    except NoSuchElementException:
-        None
-    try:
-        driver.find_element_by_name('sellAllVehicles').click()
-        time.sleep(random.uniform(2, 3))
-        press('enter')
-    except NoSuchElementException:
-        None
-    print('Gjort biltyveri ' + str(datetime.now().time()))
+    wait = driver.find_element_by_class_name('bheader').text
+
+    if wait == 'MÅ VENTE - BILTYVERI':
+        print('Kan ikkje stjele bil, må vente')
+
+    else:
+
+        try:
+            if randomNumber == 1:
+                driver.find_element_by_id('rowid_table_select_gtaaction0').click()
+            if randomNumber == 2:
+                driver.find_element_by_id('rowid_table_select_gtaaction1').click()
+            if randomNumber == 3:
+                driver.find_element_by_id('rowid_table_select_gtaaction2').click()
+            if randomNumber == 4:
+                driver.find_element_by_id('rowid_table_select_gtaaction3').click()
+        except NoSuchElementException:
+            None
+        try:
+            driver.find_element_by_name('sellAllVehicles').click()
+            alert = driver.switch_to.alert
+            alert.accept()
+            time.sleep(random.uniform(2, 3))
+            print('Har solgt bilene')
+        except NoSuchElementException:
+            print('Greide ikke selge bilene')
+        print('Gjort biltyveri ' + str(datetime.now().time()))
 
 
 def prison():
