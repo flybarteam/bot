@@ -1,14 +1,18 @@
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.common.keys import Keys
 import time
 import random
+import schedule
 from pyautogui import press
 from datetime import datetime
+
+
 print('Brukernavn')
 username = input()
 print('Passord')
 password = input()
-driver = webdriver.Safari()
+driver = webdriver.Chrome()
 
 
 def site_login():
@@ -18,8 +22,9 @@ def site_login():
     driver.find_element_by_name('login').click()
     time.sleep(random.uniform(2, 3))
 
+
 def crime():
-    #randomNumber = random.randint(1, 5)
+    randomNumber = random.randint(1, 5)
     randomNumber = 5
     driver.find_element_by_link_text('Kriminalitet').click()
     time.sleep(random.uniform(1, 2))
@@ -38,6 +43,7 @@ def crime():
         None
     print('Gjort kriminalitet ' + str(datetime.now().time()))
     time.sleep(random.uniform(1, 2))
+
 
 def blackmail():
     driver.find_element_by_link_text('Utpressing').click()
@@ -69,13 +75,12 @@ def carTheft():
         None
     try:
         driver.find_element_by_name('sellAllVehicles').click()
-        time.sleep(random.uniform(2,3))
-        #press('enter')
-
-
+        time.sleep(random.uniform(2, 3))
+        press('enter')
     except NoSuchElementException:
         None
     print('Gjort biltyveri ' + str(datetime.now().time()))
+
 
 def prison():
     tmpText = (driver.find_element_by_class_name('bheader').text)
@@ -84,22 +89,39 @@ def prison():
         time.sleep(180)
 
 
-site_login()
-while True:
-    crime()
-    blackmail()
-    carTheft()
-    time.sleep(random.uniform(180, 200))
-    crime()
-    time.sleep(random.uniform(180, 200))
-    crime()
-    carTheft()
-    time.sleep(random.uniform(180, 200))
-    crime()
-    time.sleep(random.uniform(180, 200))
-    crime()
-    carTheft()
-    time.sleep(random.uniform(180, 200))
-    crime()
-    time.sleep(random.uniform(180, 200))
+totalMoney = 0
+def banking():
+    global totalMoney
+    driver.find_element_by_link_text('Bank').click()
+    try:
+        money = str((driver.find_element_by_id('money_hand').text))
+        money = money.replace(' kr', '')
+        money = money.replace(',', '')
+        totalMoney = int(money) + totalMoney
+        print('Har totalt satt i banken: ' + str(totalMoney) + ' kr')
+        time.sleep(random.uniform(1, 2))
+    except NoSuchElementException:
+        None
+    try:
+        driver.find_element_by_name('depositAll').click()
+        time.sleep(random.uniform(1, 2))
+    except NoSuchElementException:
+        None
 
+
+
+site_login()
+
+banking()
+crime()
+blackmail()
+carTheft()
+
+schedule.every(180).to(200).seconds.do(crime)
+schedule.every(900).to(920).seconds.do(blackmail)
+schedule.every(360).to(380).seconds.do(carTheft)
+schedule.every(900).to(1000).seconds.do(banking)
+
+while True:
+    schedule.run_pending()
+    time.sleep(1)
