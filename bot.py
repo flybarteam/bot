@@ -130,7 +130,7 @@ blackmail()
 carTheft()
 
 schedule.every(180).to(200).seconds.do(crime)
-schedule.every(900).to(920).seconds.do(blackmail)
+schedule.every(960).to(980).seconds.do(blackmail)
 schedule.every(360).to(380).seconds.do(carTheft)
 schedule.every(900).to(1000).seconds.do(banking)
 
