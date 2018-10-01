@@ -20,6 +20,7 @@ def site_login():
 
 def crime():
     randomNumber = random.randint(1, 5)
+    randomNumber = 5
     driver.find_element_by_link_text('Kriminalitet').click()
     time.sleep(random.uniform(1, 2))
     try:
