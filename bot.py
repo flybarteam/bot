@@ -95,9 +95,9 @@ crime()
 blackmail()
 carTheft()
 
-schedule.every(random.uniform(180, 200)).seconds.do(crime)
-schedule.every(random.uniform(900, 920)).seconds.do(blackmail)
-schedule.every(random.uniform(360, 375)).seconds.do(carTheft)
+schedule.every(180).to(200).seconds.do(crime)
+schedule.every(900).to(920).seconds.do(blackmail)
+schedule.every(360).to(380).seconds.do(carTheft)
 
 while True:
     schedule.run_pending()
