@@ -8,7 +8,7 @@ print('Brukernavn')
 username = input()
 print('Passord')
 password = input()
-driver = webdriver.Chrome()
+driver = webdriver.Safari()
 
 
 def site_login():
@@ -19,7 +19,8 @@ def site_login():
     time.sleep(random.uniform(2, 3))
 
 def crime():
-    randomNumber = random.randint(1, 5)
+    #randomNumber = random.randint(1, 5)
+    randomNumber = 5
     driver.find_element_by_link_text('Kriminalitet').click()
     time.sleep(random.uniform(1, 2))
     try:
@@ -69,7 +70,7 @@ def carTheft():
     try:
         driver.find_element_by_name('sellAllVehicles').click()
         time.sleep(random.uniform(2,3))
-        press('enter')
+        #press('enter')
 
 
     except NoSuchElementException:
