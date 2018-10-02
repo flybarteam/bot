@@ -29,7 +29,7 @@ def crime():
     driver.find_element_by_link_text('Kriminalitet').click()
     time.sleep(random.uniform(1, 2))
     wait = driver.find_element_by_class_name('bheader').text
-    if wait == 'MÅ VENTE - KRIMINALITET':
+    if wait == 'MÅ VENTE - KRIMINALITET' or wait == 'MÅ VENTE':
         print('Kan ikkje stjele, må vente')
     else:
         try:
@@ -53,7 +53,7 @@ def blackmail():
     driver.find_element_by_link_text('Utpressing').click()
     time.sleep(random.uniform(1, 2))
     wait = driver.find_element_by_class_name('bheader').text
-    if wait == 'MÅ VENTE - UTPRESSING':
+    if wait == 'MÅ VENTE - UTPRESSING' or wait == 'MÅ VENTE':
         print('Kan ikkje utpresse, må vente')
     else:
         try:
@@ -72,7 +72,7 @@ def carTheft():
     time.sleep(random.uniform(2, 3))
     wait = driver.find_element_by_class_name('bheader').text
 
-    if wait == 'MÅ VENTE - BILTYVERI':
+    if wait == 'MÅ VENTE - BILTYVERI' or wait == 'MÅ VENTE':
         print('Kan ikkje stjele bil, må vente')
 
     else:
@@ -88,6 +88,8 @@ def carTheft():
                 driver.find_element_by_id('rowid_table_select_gtaaction3').click()
         except NoSuchElementException:
             None
+
+
         try:
             driver.find_element_by_name('sellAllVehicles').click()
             alert = driver.switch_to.alert
