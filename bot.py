@@ -74,26 +74,27 @@ def carTheft():
         if wait == 'MÅ VENTE - BILTYVERI':
             print('Kan ikkje stjele bil, må vente')
         else:
-            try:
-                if randomNumber == 1:
-                    driver.find_element_by_id('rowid_table_select_gtaaction0').click()
-                if randomNumber == 2:
-                    driver.find_element_by_id('rowid_table_select_gtaaction1').click()
-                if randomNumber == 3:
-                    driver.find_element_by_id('rowid_table_select_gtaaction2').click()
-                if randomNumber == 4:
-                    driver.find_element_by_id('rowid_table_select_gtaaction3').click()
-            except NoSuchElementException:
-                None
-            try:
-                driver.find_element_by_name('sellAllVehicles').click()
-                time.sleep(random.uniform(2, 3))
-                press('enter')
-
-
-            except NoSuchElementException:
-                None
-            print('Gjort biltyveri ' + str(datetime.now().time()))
+            if randomNumber == 1:
+                driver.find_element_by_id('rowid_table_select_gtaaction0').click()
+                print('Gjort biltyveri ' + str(datetime.now().time()))
+            if randomNumber == 2:
+                driver.find_element_by_id('rowid_table_select_gtaaction1').click()
+                print('Gjort biltyveri ' + str(datetime.now().time()))
+            if randomNumber == 3:
+                driver.find_element_by_id('rowid_table_select_gtaaction2').click()
+                print('Gjort biltyveri ' + str(datetime.now().time()))
+            if randomNumber == 4:
+                driver.find_element_by_id('rowid_table_select_gtaaction3').click()
+                print('Gjort biltyveri ' + str(datetime.now().time()))
+        try:
+            driver.find_element_by_name('sellAllVehicles').click()
+            alert = driver.switch_to.alert
+            alert.accept()
+            time.sleep(random.uniform(2, 3))
+            print('Har solgt bilene')
+        except NoSuchElementException:
+            print('Greide ikke selge bilene')
+   
 
 
 totalMoney = 0
