@@ -85,14 +85,14 @@ def carTheft():
                     driver.find_element_by_id('rowid_table_select_gtaaction3').click()
             except NoSuchElementException:
                 None
-            try:
-                driver.find_element_by_name('sellAllVehicles').click()
-                time.sleep(random.uniform(2, 3))
-                press('enter')
-
-
-            except NoSuchElementException:
-                None
+        try:
+            driver.find_element_by_name('sellAllVehicles').click()
+            alert = driver.switch_to.alert
+            alert.accept()
+            time.sleep(random.uniform(2, 3))
+            print('Har solgt bilene')
+        except NoSuchElementException:
+            print('Greide ikke selge bilene')
             print('Gjort biltyveri ' + str(datetime.now().time()))
 
 
