@@ -159,7 +159,7 @@ def missionCouch():
         driver.find_element_by_name('withdrawAll').click()
         time.sleep(random.uniform(1, 4))
         driver.find_element_by_link_text('Flyplass').click()
-        driver.find_element_by_id('rowid_table_select_destination2').click()
+        driver.find_element_by_id('rowid_table_select_destination3').click()
         time.sleep(random.uniform(1, 4))
         driver.find_element_by_name('doflight').click()
         time.sleep(random.uniform(1, 4))
@@ -212,7 +212,7 @@ login = Button(LoginWindow, text='LOG IN', command=site_login)
 login.pack()
 LoginWindow.mainloop()
 
-missionCouch()
+
 
 banking()
 crime()
