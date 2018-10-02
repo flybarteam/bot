@@ -1,25 +1,21 @@
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
-from selenium.webdriver.common.keys import Keys
 import time
 import random
 import schedule
 from pyautogui import press
 from datetime import datetime
+from tkinter import *
 
-
-print('Brukernavn')
-username = input()
-print('Passord')
-password = input()
 driver = webdriver.Chrome()
 
 
 def site_login():
     driver.get('https://www.nordicmafia.org/login.php')
-    driver.find_element_by_name('username').send_keys(username)
-    driver.find_element_by_name('password').send_keys(password)
+    driver.find_element_by_name('username').send_keys(username_entry.get())
+    driver.find_element_by_name('password').send_keys(password_entry.get())
     driver.find_element_by_name('login').click()
+    LoginWindow.destroy()
     time.sleep(random.uniform(2, 3))
 
 
@@ -60,6 +56,7 @@ def blackmail():
 
 def carTheft():
     randomNumber = random.randint(1, 4)
+    randomNumber = 4
     driver.find_element_by_link_text('Biltyveri/Garasje').click()
     time.sleep(random.uniform(2, 3))
     try:
@@ -77,17 +74,11 @@ def carTheft():
         driver.find_element_by_name('sellAllVehicles').click()
         time.sleep(random.uniform(2, 3))
         press('enter')
+
+
     except NoSuchElementException:
         None
     print('Gjort biltyveri ' + str(datetime.now().time()))
-
-
-def prison():
-    tmpText = (driver.find_element_by_class_name('bheader').text)
-    if tmpText == 'MÅ VENTE':
-        print('Venter...')
-        time.sleep(180)
-
 
 totalMoney = 0
 def banking():
@@ -109,8 +100,29 @@ def banking():
         None
 
 
+def prison():
+    tmpText = (driver.find_element_by_class_name('bheader').text)
+    if tmpText == 'MÅ VENTE':
+        print('Venter...')
+        time.sleep(180)
 
-site_login()
+LoginWindow = Tk()
+
+#Username
+username_lable = Label(LoginWindow, text="Username")
+username_lable.pack()
+username_entry = Entry(LoginWindow, bd=5)
+username_entry.pack()
+#Password
+password_lable = Label(LoginWindow, text="Password")
+password_lable.pack()
+password_entry = Entry(LoginWindow, bd=5, show='*')
+password_entry.pack()
+#Login
+login = Button(LoginWindow, text='LOG IN', command=site_login)
+login.pack()
+
+LoginWindow.mainloop()
 
 banking()
 crime()
@@ -125,3 +137,4 @@ schedule.every(900).to(1000).seconds.do(banking)
 while True:
     schedule.run_pending()
     time.sleep(1)
+
