@@ -25,39 +25,44 @@ def crime():
         randomNumber = 5
         driver.find_element_by_link_text('Kriminalitet').click()
         time.sleep(random.uniform(1, 2))
-        try:
-            if randomNumber == 1:
-                driver.find_element_by_id('rowid_table_select_krimaction0').click()
-            if randomNumber == 2:
-                driver.find_element_by_id('rowid_table_select_krimaction1').click()
-            if randomNumber == 3:
-                driver.find_element_by_id('rowid_table_select_krimaction2').click()
-            if randomNumber == 4:
-                driver.find_element_by_id('rowid_table_select_krimaction3').click()
-            if randomNumber == 5:
-                driver.find_element_by_id('rowid_table_select_krimaction4').click()
-        except NoSuchElementException:
-            None
-        print('Gjort kriminalitet ' + str(datetime.now().time()))
-        time.sleep(random.uniform(1, 2))
-    else:
-        None
+        wait = driver.find_element_by_class_name('bheader').text
+        if wait == 'MÅ VENTE - KRIMINALITET':
+            print('Kan ikkje stjele, må vente')
+        else:
+            try:
+                if randomNumber == 1:
+                    driver.find_element_by_id('rowid_table_select_krimaction0').click()
+                if randomNumber == 2:
+                    driver.find_element_by_id('rowid_table_select_krimaction1').click()
+                if randomNumber == 3:
+                    driver.find_element_by_id('rowid_table_select_krimaction2').click()
+                if randomNumber == 4:
+                    driver.find_element_by_id('rowid_table_select_krimaction3').click()
+                if randomNumber == 5:
+                    driver.find_element_by_id('rowid_table_select_krimaction4').click()
+            except NoSuchElementException:
+                None
+            print('Gjort kriminalitet ' + str(datetime.now().time()))
+            time.sleep(random.uniform(1, 2))
+
 
 
 def blackmail():
     if doBlackmail.get() == 1:
         driver.find_element_by_link_text('Utpressing').click()
         time.sleep(random.uniform(1, 2))
-        try:
-            driver.find_element_by_id('sel_1').click()
-            driver.find_element_by_name('submitBlackmail').click()
-        except NoSuchElementException:
-            None
-        print('Gjort utpressing '
-              '' + str(datetime.now().time()))
-        time.sleep(random.uniform(2, 3))
-    else:
-        None
+        wait = driver.find_element_by_class_name('bheader').text
+        if wait == 'MÅ VENTE - UTPRESSING':
+            print('Kan ikkje utpresse, må vente')
+        else:
+            try:
+                driver.find_element_by_id('sel_1').click()
+                driver.find_element_by_name('submitBlackmail').click()
+            except NoSuchElementException:
+                None
+            print('Gjort utpressing '
+                  '' + str(datetime.now().time()))
+            time.sleep(random.uniform(2, 3))
 
 def carTheft():
     if doCartheft.get() == 1:
@@ -65,28 +70,31 @@ def carTheft():
         randomNumber = 4
         driver.find_element_by_link_text('Biltyveri/Garasje').click()
         time.sleep(random.uniform(2, 3))
-        try:
-            if randomNumber == 1:
-                driver.find_element_by_id('rowid_table_select_gtaaction0').click()
-            if randomNumber == 2:
-                driver.find_element_by_id('rowid_table_select_gtaaction1').click()
-            if randomNumber == 3:
-                driver.find_element_by_id('rowid_table_select_gtaaction2').click()
-            if randomNumber == 4:
-                driver.find_element_by_id('rowid_table_select_gtaaction3').click()
-        except NoSuchElementException:
-            None
-        try:
-            driver.find_element_by_name('sellAllVehicles').click()
-            time.sleep(random.uniform(2, 3))
-            press('enter')
+        wait = driver.find_element_by_class_name('bheader').text
+        if wait == 'MÅ VENTE - BILTYVERI':
+            print('Kan ikkje stjele bil, må vente')
+        else:
+            try:
+                if randomNumber == 1:
+                    driver.find_element_by_id('rowid_table_select_gtaaction0').click()
+                if randomNumber == 2:
+                    driver.find_element_by_id('rowid_table_select_gtaaction1').click()
+                if randomNumber == 3:
+                    driver.find_element_by_id('rowid_table_select_gtaaction2').click()
+                if randomNumber == 4:
+                    driver.find_element_by_id('rowid_table_select_gtaaction3').click()
+            except NoSuchElementException:
+                None
+            try:
+                driver.find_element_by_name('sellAllVehicles').click()
+                time.sleep(random.uniform(2, 3))
+                press('enter')
 
 
-        except NoSuchElementException:
-            None
-        print('Gjort biltyveri ' + str(datetime.now().time()))
-    else:
-        None
+            except NoSuchElementException:
+                None
+            print('Gjort biltyveri ' + str(datetime.now().time()))
+
 
 totalMoney = 0
 def banking():
@@ -116,6 +124,51 @@ def prison():
     if tmpText == 'MÅ VENTE':
         print('Venter...')
         time.sleep(180)
+def missionCouch():
+    currentLocation = driver.find_element_by_xpath('//*[@id="userInfoNav"]/li[2]/span').text
+    if currentLocation == 'Stockholm':
+        driver.find_element_by_link_text('Bank').click()
+        time.sleep(random.uniform(1, 4))
+        driver.find_element_by_name('withdrawAll').click()
+        time.sleep(random.uniform(1, 4))
+        driver.find_element_by_link_text('The underground').click()
+        time.sleep(random.uniform(1, 4))
+        driver.find_element_by_name('tra_5_b').send_keys('15')
+        time.sleep(random.uniform(1, 4))
+        driver.find_element_by_name('dobuysell').click()
+        time.sleep(random.uniform(1, 4))
+        driver.find_element_by_link_text('Flyplass').click()
+        time.sleep(random.uniform(1, 4))
+        driver.find_element_by_id('rowid_table_select_destination4').click()
+        time.sleep(random.uniform(1, 4))
+        driver.find_element_by_name('doflight').click()
+        time.sleep(random.uniform(1, 4))
+        driver.find_element_by_link_text('The underground').click()
+        time.sleep(random.uniform(1, 4))
+        driver.find_element_by_name('tra_5_s').send_keys('15')
+        time.sleep(random.uniform(1, 4))
+        driver.find_element_by_name('dobuysell').click()
+        time.sleep(random.uniform(1, 4))
+        driver.find_element_by_link_text('Bank').click()
+        time.sleep(random.uniform(1, 4))
+        driver.find_element_by_name('depositAll').click()
+    elif currentLocation == 'London':
+        driver.find_element_by_link_text('Bank').click()
+        time.sleep(random.uniform(1, 4))
+        driver.find_element_by_name('withdrawAll').click()
+        time.sleep(random.uniform(1, 4))
+        driver.find_element_by_link_text('Flyplass').click()
+        driver.find_element_by_id('rowid_table_select_destination2').click()
+        time.sleep(random.uniform(1, 4))
+        driver.find_element_by_name('doflight').click()
+        time.sleep(random.uniform(1, 4))
+        driver.find_element_by_link_text('The underground').click()
+        driver.find_element_by_name('tra_5_b').send_keys('15')
+        time.sleep(random.uniform(1, 4))
+        driver.find_element_by_name('dobuysell').click()
+        time.sleep(random.uniform(1, 4))
+
+
 
 LoginWindow = Tk()
 
@@ -157,6 +210,8 @@ doBanking_checkbox.pack()
 login = Button(LoginWindow, text='LOG IN', command=site_login)
 login.pack()
 LoginWindow.mainloop()
+
+missionCouch()
 
 banking()
 crime()
