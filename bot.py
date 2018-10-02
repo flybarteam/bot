@@ -20,83 +20,94 @@ def site_login():
 
 
 def crime():
-    randomNumber = random.randint(1, 5)
-    randomNumber = 5
-    driver.find_element_by_link_text('Kriminalitet').click()
-    time.sleep(random.uniform(1, 2))
-    try:
-        if randomNumber == 1:
-            driver.find_element_by_id('rowid_table_select_krimaction0').click()
-        if randomNumber == 2:
-            driver.find_element_by_id('rowid_table_select_krimaction1').click()
-        if randomNumber == 3:
-            driver.find_element_by_id('rowid_table_select_krimaction2').click()
-        if randomNumber == 4:
-            driver.find_element_by_id('rowid_table_select_krimaction3').click()
-        if randomNumber == 5:
-            driver.find_element_by_id('rowid_table_select_krimaction4').click()
-    except NoSuchElementException:
+    if doCrime.get() == 1:
+        randomNumber = random.randint(1, 5)
+        randomNumber = 5
+        driver.find_element_by_link_text('Kriminalitet').click()
+        time.sleep(random.uniform(1, 2))
+        try:
+            if randomNumber == 1:
+                driver.find_element_by_id('rowid_table_select_krimaction0').click()
+            if randomNumber == 2:
+                driver.find_element_by_id('rowid_table_select_krimaction1').click()
+            if randomNumber == 3:
+                driver.find_element_by_id('rowid_table_select_krimaction2').click()
+            if randomNumber == 4:
+                driver.find_element_by_id('rowid_table_select_krimaction3').click()
+            if randomNumber == 5:
+                driver.find_element_by_id('rowid_table_select_krimaction4').click()
+        except NoSuchElementException:
+            None
+        print('Gjort kriminalitet ' + str(datetime.now().time()))
+        time.sleep(random.uniform(1, 2))
+    else:
         None
-    print('Gjort kriminalitet ' + str(datetime.now().time()))
-    time.sleep(random.uniform(1, 2))
 
 
 def blackmail():
-    driver.find_element_by_link_text('Utpressing').click()
-    time.sleep(random.uniform(1, 2))
-    try:
-        driver.find_element_by_id('sel_1').click()
-        driver.find_element_by_name('submitBlackmail').click()
-    except NoSuchElementException:
+    if doBlackmail.get() == 1:
+        driver.find_element_by_link_text('Utpressing').click()
+        time.sleep(random.uniform(1, 2))
+        try:
+            driver.find_element_by_id('sel_1').click()
+            driver.find_element_by_name('submitBlackmail').click()
+        except NoSuchElementException:
+            None
+        print('Gjort utpressing '
+              '' + str(datetime.now().time()))
+        time.sleep(random.uniform(2, 3))
+    else:
         None
-    print('Gjort utpressing '
-          '' + str(datetime.now().time()))
-    time.sleep(random.uniform(2, 3))
-
 
 def carTheft():
-    randomNumber = random.randint(1, 4)
-    randomNumber = 4
-    driver.find_element_by_link_text('Biltyveri/Garasje').click()
-    time.sleep(random.uniform(2, 3))
-    try:
-        if randomNumber == 1:
-            driver.find_element_by_id('rowid_table_select_gtaaction0').click()
-        if randomNumber == 2:
-            driver.find_element_by_id('rowid_table_select_gtaaction1').click()
-        if randomNumber == 3:
-            driver.find_element_by_id('rowid_table_select_gtaaction2').click()
-        if randomNumber == 4:
-            driver.find_element_by_id('rowid_table_select_gtaaction3').click()
-    except NoSuchElementException:
-        None
-    try:
-        driver.find_element_by_name('sellAllVehicles').click()
+    if doCartheft.get() == 1:
+        randomNumber = random.randint(1, 4)
+        randomNumber = 4
+        driver.find_element_by_link_text('Biltyveri/Garasje').click()
         time.sleep(random.uniform(2, 3))
-        press('enter')
+        try:
+            if randomNumber == 1:
+                driver.find_element_by_id('rowid_table_select_gtaaction0').click()
+            if randomNumber == 2:
+                driver.find_element_by_id('rowid_table_select_gtaaction1').click()
+            if randomNumber == 3:
+                driver.find_element_by_id('rowid_table_select_gtaaction2').click()
+            if randomNumber == 4:
+                driver.find_element_by_id('rowid_table_select_gtaaction3').click()
+        except NoSuchElementException:
+            None
+        try:
+            driver.find_element_by_name('sellAllVehicles').click()
+            time.sleep(random.uniform(2, 3))
+            press('enter')
 
 
-    except NoSuchElementException:
+        except NoSuchElementException:
+            None
+        print('Gjort biltyveri ' + str(datetime.now().time()))
+    else:
         None
-    print('Gjort biltyveri ' + str(datetime.now().time()))
 
 totalMoney = 0
 def banking():
-    global totalMoney
-    driver.find_element_by_link_text('Bank').click()
-    try:
-        money = str((driver.find_element_by_id('money_hand').text))
-        money = money.replace(' kr', '')
-        money = money.replace(',', '')
-        totalMoney = int(money) + totalMoney
-        print('Har totalt satt i banken: ' + str(totalMoney) + ' kr')
-        time.sleep(random.uniform(1, 2))
-    except NoSuchElementException:
-        None
-    try:
-        driver.find_element_by_name('depositAll').click()
-        time.sleep(random.uniform(1, 2))
-    except NoSuchElementException:
+    if doBanking.get() == 1:
+        global totalMoney
+        driver.find_element_by_link_text('Bank').click()
+        try:
+            money = str((driver.find_element_by_id('money_hand').text))
+            money = money.replace(' kr', '')
+            money = money.replace(',', '')
+            totalMoney = int(money) + totalMoney
+            print('Har totalt satt i banken: ' + str(totalMoney) + ' kr')
+            time.sleep(random.uniform(1, 2))
+        except NoSuchElementException:
+            None
+        try:
+            driver.find_element_by_name('depositAll').click()
+            time.sleep(random.uniform(1, 2))
+        except NoSuchElementException:
+            None
+    else:
         None
 
 
@@ -118,10 +129,33 @@ password_lable = Label(LoginWindow, text="Password")
 password_lable.pack()
 password_entry = Entry(LoginWindow, bd=5, show='*')
 password_entry.pack()
+#doCrime
+doCrime = IntVar()
+crime_checkbox = Checkbutton(LoginWindow, text = "Kriminalitet", variable = doCrime,
+                 onvalue = 1, offvalue = 0, height=1, \
+                 width = 20, )
+crime_checkbox.pack()
+#doBlackmail
+doBlackmail = IntVar()
+blackmail_checkbox = Checkbutton(LoginWindow, text = "Utpressing", variable = doBlackmail,
+                 onvalue = 1, offvalue = 0, height=1, \
+                 width = 20, )
+blackmail_checkbox.pack()
+#doCartheft
+doCartheft = IntVar()
+doCartheft_checkbox = Checkbutton(LoginWindow, text = "Biltyveri", justify = LEFT, variable = doCartheft,
+                 onvalue = 1, offvalue = 0, height=1, \
+                 width = 20)
+doCartheft_checkbox.pack()
+#doBanking
+doBanking = IntVar()
+doBanking_checkbox = Checkbutton(LoginWindow, text = "Sett pengene i banken", variable = doBanking,
+                 onvalue = 1, offvalue = 0, height=1, \
+                 width = 20, )
+doBanking_checkbox.pack()
 #Login
 login = Button(LoginWindow, text='LOG IN', command=site_login)
 login.pack()
-
 LoginWindow.mainloop()
 
 banking()
@@ -137,4 +171,3 @@ schedule.every(900).to(1000).seconds.do(banking)
 while True:
     schedule.run_pending()
     time.sleep(1)
-
