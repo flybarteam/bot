@@ -9,6 +9,7 @@ from tkinter import *
 
 driver = webdriver.Chrome()
 
+LoginWindow = Tk()
 
 def site_login():
     driver.get('https://www.nordicmafia.org/login.php')
@@ -78,12 +79,11 @@ def carTheft():
             None
         try:
             driver.find_element_by_name('sellAllVehicles').click()
-            time.sleep(random.uniform(2, 3))
-            press('enter')
-
-
         except NoSuchElementException:
             None
+        time.sleep(random.uniform(2, 3))
+        press('enter')
+
         print('Gjort biltyveri ' + str(datetime.now().time()))
     else:
         None
@@ -117,36 +117,39 @@ def prison():
         print('Venter...')
         time.sleep(180)
 
-LoginWindow = Tk()
-
 #Username
 username_lable = Label(LoginWindow, text="Username")
 username_lable.pack()
 username_entry = Entry(LoginWindow, bd=5)
 username_entry.pack()
+username_entry.focus()
 #Password
 password_lable = Label(LoginWindow, text="Password")
 password_lable.pack()
 password_entry = Entry(LoginWindow, bd=5, show='*')
 password_entry.pack()
+
 #doCrime
 doCrime = IntVar()
 crime_checkbox = Checkbutton(LoginWindow, text = "Kriminalitet", variable = doCrime,
                  onvalue = 1, offvalue = 0, height=1, \
                  width = 20, )
 crime_checkbox.pack()
+
 #doBlackmail
 doBlackmail = IntVar()
 blackmail_checkbox = Checkbutton(LoginWindow, text = "Utpressing", variable = doBlackmail,
                  onvalue = 1, offvalue = 0, height=1, \
                  width = 20, )
 blackmail_checkbox.pack()
+
 #doCartheft
 doCartheft = IntVar()
 doCartheft_checkbox = Checkbutton(LoginWindow, text = "Biltyveri", justify = LEFT, variable = doCartheft,
                  onvalue = 1, offvalue = 0, height=1, \
                  width = 20)
 doCartheft_checkbox.pack()
+
 #doBanking
 doBanking = IntVar()
 doBanking_checkbox = Checkbutton(LoginWindow, text = "Sett pengene i banken", variable = doBanking,
@@ -156,7 +159,9 @@ doBanking_checkbox.pack()
 #Login
 login = Button(LoginWindow, text='LOG IN', command=site_login)
 login.pack()
+
 LoginWindow.mainloop()
+
 
 banking()
 crime()
