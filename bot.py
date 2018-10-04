@@ -138,8 +138,17 @@ def fightclub():
             None
     else:
         None
-
-
+def shootTraining():
+    if doshootTraining.get() == 1:
+        try:
+            driver.find_element_by_link_text('Skytetrening').click()
+            time.sleep(random.uniform(2, 3))
+            driver.find_element_by_name('amount').send_keys('1')
+            time.sleep(random.uniform(2, 3))
+            driver.find_element_by_name('dotrain').click()
+            time.sleep(random.uniform(2, 3))
+        except NoSuchElementException:
+            None
 
 
 def missionCouch():
@@ -239,6 +248,13 @@ dofightclub_checkbox = Checkbutton(LoginWindow, text="Fightclub", variable=dofig
                                  width=20, )
 dofightclub_checkbox.pack()
 dofightclub_checkbox.select()
+
+# doshootTraining
+doshootTraining = IntVar()
+doshootTraining_checkbox = Checkbutton(LoginWindow, text="Skytetrening", variable=doshootTraining,
+                                 onvalue=1, offvalue=0, height=1, \
+                                 width=20, )
+doshootTraining_checkbox.pack()
 
 # Login
 login = Button(LoginWindow, text='LOG IN', command=site_login)
