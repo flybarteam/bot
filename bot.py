@@ -65,7 +65,7 @@ def blackmail():
 
 
 def carTheft():
-    if doCartheft.get() == 1:
+    if doCartheft.get() == 1 and dostealMerce.get() == 0:
         randomNumber = random.randint(1, 4)
         randomNumber = 4
         driver.find_element_by_link_text('Biltyveri/Garasje').click()
@@ -150,6 +150,60 @@ def shootTraining():
         except NoSuchElementException:
             None
 
+def stealMerce():
+    if dostealMerce.get() == 1 and doCartheft.get() == 0:
+        randomNumber = 4
+        try:
+            driver.find_element_by_link_text('Biltyveri/Garasje').click()
+            time.sleep(random.uniform(2, 3))
+            wait = driver.find_element_by_class_name('bheader').text
+            if wait == 'MÅ VENTE - BILTYVERI':
+                print('Kan ikkje stjele bil, må vente')
+            else:
+                if randomNumber == 1:
+                    driver.find_element_by_id('rowid_table_select_gtaaction0').click()
+                    print('Gjort biltyveri ' + str(datetime.now().time()))
+                if randomNumber == 2:
+                    driver.find_element_by_id('rowid_table_select_gtaaction1').click()
+                    print('Gjort biltyveri ' + str(datetime.now().time()))
+                if randomNumber == 3:
+                    driver.find_element_by_id('rowid_table_select_gtaaction2').click()
+                    print('Gjort biltyveri ' + str(datetime.now().time()))
+                if randomNumber == 4:
+                    driver.find_element_by_id('rowid_table_select_gtaaction3').click()
+                    print('Gjort biltyveri ' + str(datetime.now().time()))
+
+            try:
+                time.sleep(random.uniform(2, 3))
+                car = driver.find_element_by_xpath('//*[@id="carSelect_42215"]/td[2]/div').text
+                print(car)
+                if car == 'Mercedes-Benz SL 500':
+                    print('fant bilen')
+                    time.sleep(random.uniform(2, 3))
+                    driver.find_element_by_xpath('//*[@id="carSelect_42215"]/td[2]/div').click()
+                    time.sleep(random.uniform(2, 3))
+                    driver.find_element_by_xpath('//*[@id="transportTable"]/tbody/tr[2]/td[2]/select/option[6]').click()
+                    time.sleep(random.uniform(2, 3))
+                    driver.find_element_by_xpath('//*[@id="transportTable"]/tbody/tr[3]/td[2]/input').click()
+                    time.sleep(random.uniform(2, 3))
+                    driver.find_element_by_xpath('//*[@id="transportConfirmers"]/input[4]').click()
+                    time.sleep(random.uniform(2, 3))
+                else:
+                    print('fant ikke bilen')
+                    None
+            except NoSuchElementException:
+                None
+
+            try:
+                driver.find_element_by_name('sellAllVehicles').click()
+                alert = driver.switch_to.alert
+                alert.accept()
+                time.sleep(random.uniform(2, 3))
+                print('Har solgt bilene')
+            except NoSuchElementException:
+                print('Greide ikke selge bilene')
+        except NoSuchElementException:
+            None
 
 def missionCouch():
     currentLocation = driver.find_element_by_xpath('//*[@id="userInfoNav"]/li[2]/span').text
@@ -256,6 +310,14 @@ doshootTraining_checkbox = Checkbutton(LoginWindow, text="Skytetrening", variabl
                                  width=20, )
 doshootTraining_checkbox.pack()
 
+# dostealMerce
+dostealMerce = IntVar()
+dostealMerce_checkbox = Checkbutton(LoginWindow, text="Oppdrag Mercedes", variable=dostealMerce,
+                                 onvalue=1, offvalue=0, height=1, \
+                                 width=20,)
+dostealMerce_checkbox.pack()
+
+
 # Login
 login = Button(LoginWindow, text='LOG IN', command=site_login)
 login.pack()
@@ -267,11 +329,13 @@ fightclub()
 crime()
 blackmail()
 carTheft()
+stealMerce()
 
 
 schedule.every(180).to(200).seconds.do(crime)
 schedule.every(900).to(920).seconds.do(blackmail)
 schedule.every(360).to(380).seconds.do(carTheft)
+schedule.every(360).to(380).seconds.do(stealMerce)
 schedule.every(900).to(1000).seconds.do(banking)
 schedule.every(120).to(130).seconds.do(fightclub)
 
