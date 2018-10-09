@@ -22,7 +22,7 @@ def site_login():
 def crime():
     if doCrime.get() == 1:
         randomNumber = random.randint(1, 5)
-        #randomNumber = 5
+        # randomNumber = 5
         driver.find_element_by_link_text('Kriminalitet').click()
         time.sleep(random.uniform(1, 2))
         wait = driver.find_element_by_class_name('bheader').text
@@ -46,7 +46,6 @@ def crime():
             time.sleep(random.uniform(1, 2))
 
 
-
 def blackmail():
     if doBlackmail.get() == 1:
         driver.find_element_by_link_text('Utpressing').click()
@@ -64,8 +63,9 @@ def blackmail():
                   '' + str(datetime.now().time()))
             time.sleep(random.uniform(2, 3))
 
+
 def carTheft():
-    if doCartheft.get() == 1:
+    if doCartheft.get() == 1 and dostealMerce.get() == 0:
         randomNumber = random.randint(1, 4)
         randomNumber = 4
         driver.find_element_by_link_text('Biltyveri/Garasje').click()
@@ -86,18 +86,19 @@ def carTheft():
             if randomNumber == 4:
                 driver.find_element_by_id('rowid_table_select_gtaaction3').click()
                 print('Gjort biltyveri ' + str(datetime.now().time()))
-        try:
-            driver.find_element_by_name('sellAllVehicles').click()
-            alert = driver.switch_to.alert
-            alert.accept()
-            time.sleep(random.uniform(2, 3))
-            print('Har solgt bilene')
-        except NoSuchElementException:
-            print('Greide ikke selge bilene')
-   
+            try:
+                driver.find_element_by_name('sellAllVehicles').click()
+                alert = driver.switch_to.alert
+                alert.accept()
+                time.sleep(random.uniform(2, 3))
+                print('Har solgt bilene')
+            except NoSuchElementException:
+                print('Greide ikke selge bilene')
 
 
 totalMoney = 0
+
+
 def banking():
     if doBanking.get() == 1:
         global totalMoney
@@ -125,6 +126,85 @@ def prison():
     if tmpText == 'MÅ VENTE':
         print('Venter...')
         time.sleep(180)
+
+def fightclub():
+    if dofightclub.get() == 1:
+        try:
+            driver.find_element_by_link_text('Fightclub').click()
+            time.sleep(random.uniform(2, 3))
+            driver.find_element_by_id('rowid_table_select_fcworkout3').click()
+            print('Gjort fightclub')
+        except NoSuchElementException:
+            None
+    else:
+        None
+def shootTraining():
+    if doshootTraining.get() == 1:
+        try:
+            driver.find_element_by_link_text('Skytetrening').click()
+            time.sleep(random.uniform(2, 3))
+            driver.find_element_by_name('amount').send_keys('1')
+            time.sleep(random.uniform(2, 3))
+            driver.find_element_by_name('dotrain').click()
+            time.sleep(random.uniform(2, 3))
+        except NoSuchElementException:
+            None
+
+def stealMerce():
+    if dostealMerce.get() == 1 and doCartheft.get() == 0:
+        randomNumber = 4
+        try:
+            driver.find_element_by_link_text('Biltyveri/Garasje').click()
+            time.sleep(random.uniform(2, 3))
+            wait = driver.find_element_by_class_name('bheader').text
+            if wait == 'MÅ VENTE - BILTYVERI':
+                print('Kan ikkje stjele bil, må vente')
+            else:
+                if randomNumber == 1:
+                    driver.find_element_by_id('rowid_table_select_gtaaction0').click()
+                    print('Gjort biltyveri ' + str(datetime.now().time()))
+                if randomNumber == 2:
+                    driver.find_element_by_id('rowid_table_select_gtaaction1').click()
+                    print('Gjort biltyveri ' + str(datetime.now().time()))
+                if randomNumber == 3:
+                    driver.find_element_by_id('rowid_table_select_gtaaction2').click()
+                    print('Gjort biltyveri ' + str(datetime.now().time()))
+                if randomNumber == 4:
+                    driver.find_element_by_id('rowid_table_select_gtaaction3').click()
+                    print('Gjort biltyveri ' + str(datetime.now().time()))
+
+            try:
+                time.sleep(random.uniform(2, 3))
+                car = driver.find_element_by_xpath('//*[@id="carSelect_42215"]/td[2]/div').text
+                print(car)
+                if car == 'Mercedes-Benz SL 500':
+                    print('fant bilen')
+                    time.sleep(random.uniform(2, 3))
+                    driver.find_element_by_xpath('//*[@id="carSelect_42215"]/td[2]/div').click()
+                    time.sleep(random.uniform(2, 3))
+                    driver.find_element_by_xpath('//*[@id="transportTable"]/tbody/tr[2]/td[2]/select/option[6]').click()
+                    time.sleep(random.uniform(2, 3))
+                    driver.find_element_by_xpath('//*[@id="transportTable"]/tbody/tr[3]/td[2]/input').click()
+                    time.sleep(random.uniform(2, 3))
+                    driver.find_element_by_xpath('//*[@id="transportConfirmers"]/input[4]').click()
+                    time.sleep(random.uniform(2, 3))
+                else:
+                    print('fant ikke bilen')
+                    None
+            except NoSuchElementException:
+                None
+
+            try:
+                driver.find_element_by_name('sellAllVehicles').click()
+                alert = driver.switch_to.alert
+                alert.accept()
+                time.sleep(random.uniform(2, 3))
+                print('Har solgt bilene')
+            except NoSuchElementException:
+                print('Greide ikke selge bilene')
+        except NoSuchElementException:
+            None
+
 def missionCouch():
     currentLocation = driver.find_element_by_xpath('//*[@id="userInfoNav"]/li[2]/span').text
     if currentLocation == 'Stockholm':
@@ -170,59 +250,94 @@ def missionCouch():
         time.sleep(random.uniform(1, 4))
 
 
-
 LoginWindow = Tk()
 
-#Username
+# Username
 username_lable = Label(LoginWindow, text="Username")
 username_lable.pack()
 username_entry = Entry(LoginWindow, bd=5)
 username_entry.pack()
-#Password
+# Password
 password_lable = Label(LoginWindow, text="Password")
 password_lable.pack()
 password_entry = Entry(LoginWindow, bd=5, show='*')
 password_entry.pack()
-#doCrime
+
+# doCrime
 doCrime = IntVar()
-crime_checkbox = Checkbutton(LoginWindow, text = "Kriminalitet", variable = doCrime,
-                 onvalue = 1, offvalue = 0, height=1, \
-                 width = 20, )
+crime_checkbox = Checkbutton(LoginWindow, text="Kriminalitet", variable=doCrime,
+                             onvalue=1, offvalue=0, height=1, \
+                             width=20, )
 crime_checkbox.pack()
-#doBlackmail
+crime_checkbox.select()
+
+# doBlackmail
 doBlackmail = IntVar()
-blackmail_checkbox = Checkbutton(LoginWindow, text = "Utpressing", variable = doBlackmail,
-                 onvalue = 1, offvalue = 0, height=1, \
-                 width = 20, )
+blackmail_checkbox = Checkbutton(LoginWindow, text="Utpressing", variable=doBlackmail,
+                                 onvalue=1, offvalue=0, height=1, \
+                                 width=20, )
 blackmail_checkbox.pack()
-#doCartheft
+blackmail_checkbox.select()
+
+# doCartheft
 doCartheft = IntVar()
-doCartheft_checkbox = Checkbutton(LoginWindow, text = "Biltyveri", justify = LEFT, variable = doCartheft,
-                 onvalue = 1, offvalue = 0, height=1, \
-                 width = 20)
+doCartheft_checkbox = Checkbutton(LoginWindow, text="Biltyveri", justify=LEFT, variable=doCartheft,
+                                  onvalue=1, offvalue=0, height=1, \
+                                  width=20)
 doCartheft_checkbox.pack()
-#doBanking
+doCartheft_checkbox.select()
+
+# doBanking
 doBanking = IntVar()
-doBanking_checkbox = Checkbutton(LoginWindow, text = "Sett pengene i banken", variable = doBanking,
-                 onvalue = 1, offvalue = 0, height=1, \
-                 width = 20, )
+doBanking_checkbox = Checkbutton(LoginWindow, text="Sett pengene i banken", variable=doBanking,
+                                 onvalue=1, offvalue=0, height=1, \
+                                 width=20, )
 doBanking_checkbox.pack()
-#Login
+doBanking_checkbox.select()
+
+# dofightclub
+dofightclub = IntVar()
+dofightclub_checkbox = Checkbutton(LoginWindow, text="Fightclub", variable=dofightclub,
+                                 onvalue=1, offvalue=0, height=1, \
+                                 width=20, )
+dofightclub_checkbox.pack()
+dofightclub_checkbox.select()
+
+# doshootTraining
+doshootTraining = IntVar()
+doshootTraining_checkbox = Checkbutton(LoginWindow, text="Skytetrening", variable=doshootTraining,
+                                 onvalue=1, offvalue=0, height=1, \
+                                 width=20, )
+doshootTraining_checkbox.pack()
+
+# dostealMerce
+dostealMerce = IntVar()
+dostealMerce_checkbox = Checkbutton(LoginWindow, text="Oppdrag Mercedes", variable=dostealMerce,
+                                 onvalue=1, offvalue=0, height=1, \
+                                 width=20,)
+dostealMerce_checkbox.pack()
+
+
+# Login
 login = Button(LoginWindow, text='LOG IN', command=site_login)
 login.pack()
 LoginWindow.mainloop()
 
-
-
+# first sequence
 banking()
+fightclub()
 crime()
 blackmail()
 carTheft()
+stealMerce()
+
 
 schedule.every(180).to(200).seconds.do(crime)
 schedule.every(900).to(920).seconds.do(blackmail)
 schedule.every(360).to(380).seconds.do(carTheft)
+schedule.every(360).to(380).seconds.do(stealMerce)
 schedule.every(900).to(1000).seconds.do(banking)
+schedule.every(120).to(130).seconds.do(fightclub)
 
 while True:
     schedule.run_pending()
